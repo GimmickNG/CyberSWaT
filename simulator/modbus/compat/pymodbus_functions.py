@@ -1,7 +1,7 @@
 from pymodbus.pdu import ExceptionResponse
 from pymodbus.bit_read_message import ReadCoilsResponse
 from pymodbus.register_read_message import ReadRegistersResponseBase
-from pymodbus.client.base import ModbusClientProtocol as ModbusClient
+from pymodbus.client.base import ModbusBaseClient as ModbusClient
 from typing import List, Tuple, Union, cast
 from ..types import ModbusRegisterData, RegisterValue
 from ..tag import PayloadBuilder, PayloadDecoder, Tag

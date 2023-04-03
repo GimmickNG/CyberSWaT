@@ -7,6 +7,10 @@ export PYTHONIOENCODING := utf-8
 # **WILL BE DELETED** after use. Do NOT use a directory that contains important files!
 PYCOPY_BUILD_DIR ?= .pycopy_build
 
+# The default (temporary) umodbus parent directory. This will contain the .umodbus folder,
+# **WILL BE DELETED** after installing micropython-modbus. Unlike $(PYCOPY_BUILD_DIR), this
+# folder can be assigned to one that contains important files, since it installs the library
+# in a subdirectory.
 UMODBUS_BUILD_DIR ?= pycopy-tools
 
 # PYCOPY_STDLIB contains the names of pycopy libraries in the 'pycopy-lib' repository
@@ -77,13 +81,15 @@ pycopy-build: clean-install
 
 pycopy-build-lib:
 	echo "Copying specified standard libraries: $(PYCOPY_STDLIB)"
+	@# install pycopy libraries
 	git clone --depth=1 https://github.com/GimmickNG/sim-pycopy-lib.git $(PYCOPY_BUILD_DIR)/.pycopy-lib
-	git clone https://github.com/GimmickNG/pycopy-modbus.git $(UMODBUS_BUILD_DIR)/.umodbus
-	cd $(UMODBUS_BUILD_DIR)/.umodbus && git switch mpmodbus-compatibility && mv umodbus/ ../
-	rm -rf $(UMODBUS_BUILD_DIR)/.umodbus
 	cd $(PYCOPY_BUILD_DIR)/.pycopy-lib && $(PYTHON) ./install.py $(PYCOPY_STDLIB) ../ports/unix/modules/
 	cp -r pycopy-tools/uasyncio $(PYCOPY_BUILD_DIR)/ports/unix/modules/
-	cp -r pycopy-tools/umodbus/ $(PYCOPY_BUILD_DIR)/ports/unix/modules/umodbus
+	echo "Installing micropython-modbus"
+	git clone https://github.com/GimmickNG/pycopy-modbus.git $(UMODBUS_BUILD_DIR)/.umodbus
+	cd $(UMODBUS_BUILD_DIR)/.umodbus && git switch mpmodbus-compatibility
+	mv $(UMODBUS_BUILD_DIR)/.umodbus/umodbus $(PYCOPY_BUILD_DIR)/ports/unix/modules
+	rm -rf $(UMODBUS_BUILD_DIR)/.umodbus
 	echo "Building Pycopy Unix port..."
 	cd $(PYCOPY_BUILD_DIR)/ports/unix && make submodules && make
 	if [ -n "$(PYCOPY_LIBS)" ]; then \

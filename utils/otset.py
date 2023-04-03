@@ -9,7 +9,7 @@ from simulator.modbus.tag import SkipTag, Tag
 from simulator.modbus.types import RegisterValue
 from simulator.modbus.compat.pymodbus_functions import encode_coils, encode_registers
 from pymodbus.client import AsyncModbusTcpClient as AsyncModbusClient
-from pymodbus.client.base import ModbusClientProtocol
+from pymodbus.client.base import ModbusBaseClient
 from typing import Any, Coroutine, List, Tuple
 from . import DEFAULT_PORT, gen_classlist
 
@@ -29,7 +29,7 @@ def tag_to_tuple(x: Tag) -> Tuple[Tag, RegisterValue]:
 def tuple_to_tag(x: Tuple[Tag, RegisterValue]) -> Tag:
     return x[0]
 
-async def tell_device(client: ModbusClientProtocol,
+async def tell_device(client: ModbusBaseClient,
                       unit_id: int,
                       *tag_values: Tuple[Tag, RegisterValue],
                       **kwargs) -> None:

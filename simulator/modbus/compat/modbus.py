@@ -14,7 +14,7 @@ else:
     from pymodbus.datastore import ModbusSparseDataBlock
     from pymodbus.device import ModbusDeviceIdentification
     from pymodbus.client import AsyncModbusTcpClient as AsyncModbusClient
-    from pymodbus.client.base import ModbusClientProtocol as ModbusClient
+    from pymodbus.client.base import ModbusBaseClient as ModbusClient
     from pymodbus.datastore import ModbusServerContext, ModbusSlaveContext
     from .pymodbus_functions import encode_coils, decode_coils, encode_registers, decode_registers
     from .pymodbus_functions import start_tcp_server

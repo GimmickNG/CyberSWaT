@@ -12,13 +12,13 @@ from simulator.modbus.tag import SkipTag, Tag
 from simulator.modbus.types.remote import ContiguousTagSet
 from simulator.modbus.types import RegisterValue
 from pymodbus.client import AsyncModbusTcpClient as AsyncModbusClient
-from pymodbus.client.base import ModbusClientProtocol
+from pymodbus.client.base import ModbusBaseClient
 from typing import Any, Dict, List, Optional, Tuple, Type, Union
 from . import DEFAULT_PORT, gen_classlist
 
 DeviceTagInfo = Dict[Tag, Union[str, RegisterValue]]
 
-async def connect(ip: str, port: int, timeout: float = 1) -> Optional[ModbusClientProtocol]:
+async def connect(ip: str, port: int, timeout: float = 1) -> Optional[ModbusBaseClient]:
     client = AsyncModbusClient(host=ip, port=port, timeout=timeout, loop=asyncio.get_running_loop())
     await client.connect()
     if client.protocol is None:
@@ -27,7 +27,7 @@ async def connect(ip: str, port: int, timeout: float = 1) -> Optional[ModbusClie
     return client.protocol
 
 async def read_tags(
-    client: ModbusClientProtocol,
+    client: ModbusBaseClient,
     tag_set: ContiguousTagSet,
 ) -> Optional[Tuple[List[bool], List[RegisterValue]]]:
     return await asyncio.gather(
