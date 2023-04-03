@@ -3,7 +3,7 @@
 if ! [ -x "$(command -v mn)" ]; then
     INSTALLPATH=$(pwd)
     sudo apt update
-    sudo apt install -y libffi-dev pkg-config mariadb-server
+    sudo apt install -y libffi-dev pkg-config mariadb-server makeself
     cd ~/
     git clone https://github.com/mininet/mininet
     cd mininet/
