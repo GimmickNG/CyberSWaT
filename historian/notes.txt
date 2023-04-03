@@ -1,0 +1,2 @@
+Use Mango Automation github to pull mango source
+- https://github.com/MangoAutomation/ma-core-public/tree/4.3.x

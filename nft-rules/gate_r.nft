@@ -1,0 +1,6 @@
+table ip nat {
+	chain postrouting {
+		type nat hook postrouting priority srcnat; policy accept;
+		ip saddr 192.168.0.0/16 oif "gate_r-rem_r" snat to 10.0.0.1
+	}
+}

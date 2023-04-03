@@ -1,0 +1,9 @@
+== TODO
+. Add command to Mininet CLI that shows devices in OT network, IT network and control network
+    .. e.g. "mininet> net show ot/it/control"
+. Add command to Mininet CLI that simulates failures in devices in a subnet by setting links up and down at random ("chaos monkey")
+    .. e.g. "mininet> simulate failures <ip> <probability>"
+    .. gets router with this ip address, and gets all devices connected to this router + switch. then sets links up and down with probability X per second (typically 0.00001 or so since it can add up with time due to binomial distribution)
+
+=== Other:
+. use httpx+asyncio instead of requests for async requests in monitoring / remote client
