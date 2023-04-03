@@ -21,10 +21,10 @@ DeviceTagInfo = Dict[Tag, Union[str, RegisterValue]]
 async def connect(ip: str, port: int, timeout: float = 1) -> Optional[ModbusBaseClient]:
     client = AsyncModbusClient(host=ip, port=port, timeout=timeout, loop=asyncio.get_running_loop())
     await client.connect()
-    if client.protocol is None:
+    if not client.connected:
         await client.close()
         return None
-    return client.protocol
+    return client
 
 async def read_tags(
     client: ModbusBaseClient,

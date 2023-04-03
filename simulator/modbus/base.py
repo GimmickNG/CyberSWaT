@@ -471,11 +471,11 @@ class BaseModbusClient:
             client = AsyncModbusClient(host=device_ip, port=device_port, timeout=300000)
             await client.connect()
             if not client.connected:
-                print(perf_counter(), type(self).__name__, device_name, "@", device_ip, ":", device_port, "=>", type(client.protocol))
+                print(perf_counter(), type(self).__name__, device_name, "@", device_ip, ":", device_port, "=>", type(client))
             mapping: RemoteDeviceMapping = {
                 "ip": IPString(device_ip),
                 "port": device_port,
-                "client": client.protocol,
+                "client": client,
                 "tags": device_class.create_tag_database()
             }
             return (device_name, mapping)

@@ -79,7 +79,7 @@ async def run_tasks(address, class_name, tag_values) -> bool:
     client = AsyncModbusClient(host=ip, port=port, timeout=1, loop=asyncio.get_running_loop())
     await client.connect()
     
-    if client.protocol is not None and class_name in class_list:
+    if client.connected and class_name in class_list:
         device_class = class_list[class_name]
         tag_database = device_class.create_tag_database()
         parsed_tag_values: List[Tuple[Tag, RegisterValue]] = []
@@ -92,7 +92,7 @@ async def run_tasks(address, class_name, tag_values) -> bool:
             if new_value is not None:
                 parsed_tag_values.append((tag_type, new_value))
         if len(parsed_tag_values):
-            await tell_device(client.protocol, args.unit_id, *parsed_tag_values)
+            await tell_device(client, args.unit_id, *parsed_tag_values)
             return True
     return False
 
