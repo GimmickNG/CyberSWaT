@@ -11,8 +11,7 @@ scipy
 numpy
 rich
 cmd2
-terminaltables
 prompt_toolkit
 pymodbus
-#git+https://github.com/cnp3/ipmininet.git@v1.1#egg=ipmininet
-git+https://github.com/termcolor/termcolor@main#egg=termcolor
+terminaltables
+termcolor
